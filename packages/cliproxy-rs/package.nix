@@ -1,6 +1,9 @@
 {
   lib,
   fetchFromGitHub,
+  fetchNpmDeps,
+  nodejs,
+  npmHooks,
   rustPlatform,
   cmake,
   git,
@@ -17,7 +20,19 @@ rustPlatform.buildRustPackage (finalAttrs: {
     owner = "vayungodara";
     repo = "cliproxy-rs";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-pIm403jrG5r+WF+36F/bTt3ZijdQVm3XlkLcWTtDOGQ=";
+    # Upstream commits the built dashboard; drop it so the embedded copy can
+    # only come from the ui/ sources built below.
+    postFetch = ''
+      rm -r $out/ui/dist $out/ui/dist-panel
+    '';
+    hash = "sha256-11F//XnpRO0AJdmxRex8Vbd523iJrQd9UvqyCpHtf3M=";
+  };
+
+  npmRoot = "ui";
+  npmDeps = fetchNpmDeps {
+    name = "${finalAttrs.pname}-${finalAttrs.version}-npm-deps";
+    src = "${finalAttrs.src}/ui";
+    hash = "sha256-wTHSAyxEMcCFUtoDOJ8qASiPOemWo8pIiijA7Do8bKY=";
   };
 
   cargoHash = "sha256-VUH6AtTAHXhgnEGtRzvOEUf0jXhq63/FMYztJy6a/Jc=";
@@ -39,6 +54,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     cmake
     git
     rustPlatform.bindgenHook
+    nodejs
+    npmHooks.npmConfigHook
     # nixpkgs' cargoSetupHook sets ZSTD_SYS_USE_PKG_CONFIG, so zstd-sys
     # links the system zstd instead of compiling its vendored copy.
     pkg-config
@@ -47,6 +64,12 @@ rustPlatform.buildRustPackage (finalAttrs: {
   buildInputs = [ zstd ];
 
   dontUseCmakeConfigure = true;
+
+  # cpa-server's build.rs embeds ui/dist (via the crates/cpa-server/dashboard
+  # symlink) into the binary.
+  preBuild = ''
+    npm --prefix ui run build
+  '';
 
   env = {
     CPA_COMMIT = "v${finalAttrs.version}";
