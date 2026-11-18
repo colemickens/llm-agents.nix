@@ -1927,6 +1927,16 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 </details>
 <details>
+<summary><strong>cliproxy-rs</strong> - Local proxy exposing DeepSeek, GLM, Kimi, OpenRouter and more to Codex CLI and Claude Code, CLIProxyAPI-compatible</summary>
+
+- **Source**: source
+- **License**: MIT
+- **Homepage**: https://github.com/vayungodara/cliproxy-rs
+- **Usage**: `nix run github:numtide/llm-agents.nix#cliproxy-rs -- --help`
+- **Nix**: [packages/cliproxy-rs/package.nix](packages/cliproxy-rs/package.nix)
+
+</details>
+<details>
 <summary><strong>codex-auth</strong> - CLI tool for switching Codex accounts</summary>
 
 - **Source**: source
