@@ -2017,6 +2017,26 @@ Nix packages for AI coding agents and development tools. Automatically updated d
 
 </details>
 <details>
+<summary><strong>magpie</strong> - Local gateway that routes any coding agent to any model provider, as a menu bar app</summary>
+
+- **Source**: source
+- **License**: MIT
+- **Homepage**: https://usemagpie.ai
+- **Usage**: `nix run github:numtide/llm-agents.nix#magpie -- --help`
+- **Nix**: [packages/magpie/package.nix](packages/magpie/package.nix)
+
+</details>
+<details>
+<summary><strong>magpie-cli</strong> - Local gateway that routes any coding agent to any model provider (terminal-only build)</summary>
+
+- **Source**: source
+- **License**: MIT
+- **Homepage**: https://usemagpie.ai
+- **Usage**: `nix run github:numtide/llm-agents.nix#magpie-cli -- --help`
+- **Nix**: [packages/magpie-cli/package.nix](packages/magpie-cli/package.nix)
+
+</details>
+<details>
 <summary><strong>mcp-remote</strong> - Connect MCP clients that only support local (stdio) servers to a remote MCP server</summary>
 
 - **Source**: source
